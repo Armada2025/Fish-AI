@@ -844,7 +844,7 @@ class Presentator:
             x, y, w, h = self._utsnitt(utsnitt, foto, vb, vh)
             vf = f"crop={w}:{h}:{x}:{y},scale={kb}:{kh}:flags=lanczos,fps={FPS}"
             self.proc = subprocess.Popen(
-                ["ffmpeg", "-v", "error", "-ss", f"{fra:.3f}", "-i", str(video), "-vf", vf,
+                ["ffmpeg", "-v", "fatal", "-ss", f"{fra:.3f}", "-i", str(video), "-vf", vf,
                  "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
             print(f"Presentatør: video {video.name} ({vb}x{vh}), utsnitt {x},{y} {w}x{h}")
         elif foto:
