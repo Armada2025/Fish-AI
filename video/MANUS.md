@@ -34,15 +34,15 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`ki_5`** – Og det er nettopp dette Copilot gjør. Det er generativ KI, bygget inn i verktøyene vi bruker på jobben.
 
-**`ki_6`** – Det viktigste å huske er at KI ikke tenker som et menneske. Den har lært mønstre, og bruker dem til å lage svar.
+**`ki_6`** – Det viktigste å huske er at KI ikke tenker som et menneske. Den har lært mønstre og bruker dem til å lage svar.
 
 ## 4. Hvordan virker en språkmodell?
 
-**`sprakmodell_1`** – Kjernen i Copilot er en stor språkmodell. Den er trent på enorme mengder tekst, og har lært hvordan språk henger sammen.
+**`sprakmodell_1`** – Kjernen i Copilot er en stor språkmodell. Den er trent på enorme mengder tekst og har lært hvordan språk henger sammen.
 
-**`sprakmodell_2`** – Litt forenklet fungerer det slik: Modellen ser på teksten så langt, og beregner hvilket ord som mest sannsynlig kommer etterpå.
+**`sprakmodell_2`** – Litt forenklet fungerer det slik: Modellen ser på teksten så langt og beregner hvilket ord som mest sannsynlig kommer etterpå.
 
-**`sprakmodell_3`** – Hvis jeg skriver: Fisken som ble fanget i går, var en stor, vil modellen vurdere ord som torsk, sei eller laks, og velge et av de mest sannsynlige.
+**`sprakmodell_3`** – Tenk deg at jeg skriver: Fisken som ble fanget i går, var en stor … Da vil modellen vurdere ord som torsk, sei eller laks, og velge ett av de mest sannsynlige.
 
 **`sprakmodell_4`** – Slik bygger den svaret, ord for ord. Det er derfor svarene kan virke så naturlige.
 
@@ -50,7 +50,7 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 ## 5. Hva er Copilot?
 
-**`hva_1`** – Copilot er Microsofts KI-assistent. Den er bygget på store språkmodeller, og er laget for å hjelpe deg med vanlige arbeidsoppgaver.
+**`hva_1`** – Copilot er Microsofts KI-assistent. Den er bygget på store språkmodeller og er laget for å hjelpe deg med vanlige arbeidsoppgaver.
 
 **`hva_2`** – Du trenger ikke å kunne programmering eller spesielle kommandoer. Du skriver, eller snakker, på vanlig norsk, nesten som med en kollega.
 
@@ -62,17 +62,17 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`versjoner_1`** – Det finnes flere versjoner av Copilot, og det kan være litt forvirrende. Litt forenklet kan vi dele dem i to.
 
-**`versjoner_2`** – Den første er Copilot Chat. Det er en chat-tjeneste du finner i nettleseren, i Teams og i Copilot-appen. Den bruker informasjon fra nettet, og det du selv limer inn eller laster opp. Mange virksomheter har denne tilgjengelig som en del av jobb- eller skolekontoen.
+**`versjoner_2`** – Den første er Copilot Chat. Det er en chat-tjeneste du finner i nettleseren, i Teams og i Copilot-appen. Den bruker informasjon fra nettet og det du selv limer inn eller laster opp. Mange virksomheter har denne tilgjengelig som en del av jobb- eller skolekontoen.
 
-**`versjoner_3`** – Den andre er Microsoft 365 Copilot. Den er bygget direkte inn i Office-appene, og kan bruke jobbdataene dine, som e-poster, dokumenter og møter. Denne krever en egen lisens.
+**`versjoner_3`** – Den andre er Microsoft Copilot, som tidligere het Microsoft 365 Copilot. Den er bygget inn i Office-appene og kan bruke e-postene, dokumentene og møtene dine. Den krever egen lisens.
 
-**`versjoner_4`** – Hvilken versjon du har, avhenger av hva virksomheten din har valgt. Mye av det jeg viser i dag fungerer i begge, men noen av funksjonene i appene krever den fulle versjonen.
+**`versjoner_4`** – Hvilken versjon du har, avhenger av hva virksomheten din har valgt. Chatten fungerer i begge, men mye av det jeg viser i Word, Excel, PowerPoint og Teams krever den fulle versjonen.
 
 ## 7. Slik fungerer det
 
 **`fungerer_1`** – La oss se på hva som skjer når du bruker Copilot. Det starter med at du skriver en instruksjon. Det kaller vi en prompt.
 
-**`fungerer_2`** – Copilot henter så relevant informasjon, for eksempel fra e-poster, dokumenter og møter. Og det er viktig: Den finner bare det du allerede har tilgang til. Tilgangene dine gjelder fortsatt.
+**`fungerer_2`** – Så henter Copilot relevant informasjon, for eksempel fra e-poster, dokumenter og møter. Og det er viktig: Den finner bare det du allerede har tilgang til. Tilgangene dine gjelder fortsatt.
 
 **`fungerer_3`** – Deretter lager språkmodellen et svar, basert på instruksjonen din og informasjonen den fant.
 
@@ -82,7 +82,7 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`finne_1`** – Så, hvor finner du Copilot?
 
-**`finne_2`** – I Word, Excel, PowerPoint og Outlook finner du en egen Copilot-knapp, vanligvis øverst i menyen. Klikker du på den, åpnes et panel på siden der du kan skrive.
+**`finne_2`** – I Word, Excel og PowerPoint ligger Copilot-knappen som regel nede til høyre i dokumentet, og i Outlook øverst. Klikker du på den, åpnes et panel på siden der du kan skrive.
 
 **`finne_3`** – Du finner også Copilot i Teams, i Edge-nettleseren og i Copilot-appen.
 
@@ -90,7 +90,7 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`finne_5`** – Og så er det bare å starte. Begynn gjerne med et enkelt spørsmål, og se hva som skjer.
 
-**`finne_6`** – Er du usikker på hvilken versjon du har tilgang til, kan du spørre IT-avdelingen, eller den som har ansvar for lisensene hos dere.
+**`finne_6`** – Er du usikker på hvilken versjon du har tilgang til, kan du spørre IT-avdelingen eller den som har ansvar for lisensene hos dere.
 
 ## 9. Copilot i Word
 
@@ -98,13 +98,13 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`word_2`** – Copilot kan skrive et første utkast for deg. Du beskriver hva dokumentet skal handle om, og får et utgangspunkt på sekunder. Du kan også be den bygge på andre filer, for eksempel et notat eller en rapport.
 
-**`word_3`** – Har du allerede en tekst, kan du markere den og be Copilot omformulere den, gjøre den kortere, eller endre tonen.
+**`word_3`** – Har du allerede en tekst, kan du markere den og be Copilot omformulere den, gjøre den kortere eller endre tonen.
 
-**`word_4`** – Og får du et langt dokument, kan Copilot oppsummere det, eller svare på spørsmål om innholdet.
+**`word_4`** – Og får du et langt dokument, kan Copilot oppsummere det eller svare på spørsmål om innholdet.
 
-**`word_5`** – Et eksempel kan være: Lag et utkast til et informasjonsskriv om nye rutiner for fangstrapportering, basert på en bestemt fil, på maks én side, og med vennlig tone.
+**`word_5`** – Et eksempel kan være: Lag et utkast til et informasjonsskriv om nye rutiner for fangstrapportering, basert på en bestemt fil, på maks én side og med vennlig tone.
 
-**`word_6`** – Og husk at du alltid kan be om en ny versjon, eller beholde bare de delene du liker.
+**`word_6`** – Og husk at du alltid kan be om en ny versjon eller beholde bare de delene du liker.
 
 ## 10. Copilot i Outlook
 
@@ -122,7 +122,7 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`teams_1`** – Teams er kanskje stedet der mange sparer mest tid.
 
-**`teams_2`** – Etter et møte kan Copilot lage et sammendrag, med de viktigste temaene, beslutningene, og hvem som skal gjøre hva. Dette forutsetter at møtet blir transkribert.
+**`teams_2`** – Etter et møte kan Copilot lage et sammendrag, med de viktigste temaene, beslutningene og hvem som skal gjøre hva. Dette forutsetter at møtet blir transkribert.
 
 **`teams_3`** – Kommer du for sent, kan du spørre: Hva har jeg gått glipp av? Da får du en rask oppsummering, uten å forstyrre møtet.
 
@@ -150,7 +150,7 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`powerpoint_2`** – Du kan be den lage en presentasjon basert på et Word-dokument. Da får du et utkast med lysbilder, struktur og bilder. Se likevel over design og bilder, slik at presentasjonen passer til virksomhetens profil.
 
-**`powerpoint_3`** – Du kan også legge til nye lysbilder, eller be om talenotater, slik at du vet hva du skal si.
+**`powerpoint_3`** – Du kan også legge til nye lysbilder eller be om foredragsnotater, slik at du vet hva du skal si.
 
 **`powerpoint_4`** – Og får du tilsendt en lang presentasjon, kan Copilot oppsummere de viktigste poengene.
 
@@ -160,9 +160,9 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`eksempel_1`** – La oss se på et litt mer detaljert eksempel. Her ber jeg Copilot om å oppsummere fangstrapportene fra september.
 
-**`eksempel_2`** – Legg merke til hvordan prompten er bygget opp. Jeg sier hva jeg vil ha, hvordan svaret skal se ut, og hvilken fil Copilot skal bruke.
+**`eksempel_2`** – Legg merke til hvordan prompten er bygget opp. Jeg sier hva jeg vil ha, hvordan svaret skal se ut og hvilken fil Copilot skal bruke.
 
-**`eksempel_3`** – Copilot svarer med en ryddig tabell, og peker på de viktigste endringene. Det som ellers kunne tatt en halvtime, tar nå noen sekunder.
+**`eksempel_3`** – Copilot svarer med en ryddig tabell og peker på de viktigste endringene. Det som ellers kunne tatt en halvtime, tar nå noen sekunder.
 
 **`eksempel_4`** – Men før jeg bruker tallene, for eksempel i en rapport, sjekker jeg dem alltid mot kildefilen. Copilot kan nemlig både lese feil og regne feil.
 
@@ -186,17 +186,17 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`sammenlign_2`** – Til venstre ser du en svak prompt: Skriv om fisket. Copilot må gjette på nesten alt. Hvilket fiske? For hvem? Og hvor langt?
 
-**`sammenlign_3`** – Til høyre er en god prompt. Her står det hva som skal skrives, hvem det er til, hvor langt det skal være, hvilken kilde som skal brukes, og hvilken tone teksten skal ha.
+**`sammenlign_3`** – Til høyre er en god prompt. Her står det hva som skal skrives, hvem det er til, hvor langt det skal være, hvilken kilde som skal brukes og hvilken tone teksten skal ha.
 
-**`sammenlign_4`** – Den gode prompten tar kanskje tjue sekunder lenger å skrive, men du sparer mye tid på å slippe å rette opp et dårlig svar.
+**`sammenlign_4`** – Den gode prompten tar kanskje tjue sekunder lenger å skrive, men du slipper å bruke mye tid på å rette opp et dårlig svar.
 
 ## 17. Bygg videre – det er en samtale
 
-**`samtale_1`** – Et av de viktigste tipsene er dette: Bruk Copilot som en samtale, ikke som en søkemotor. Det første svaret er sjelden perfekt, så bygg videre på det.
+**`samtale_1`** – Et av de viktigste tipsene er dette: Bruk Copilot som en samtalepartner, ikke som en søkemotor. Det første svaret er sjelden perfekt, så bygg videre på det.
 
 **`samtale_2`** – Er teksten for lang, kan du skrive: Gjør det kortere og enklere.
 
-**`samtale_3`** – Passer ikke tonen, ber du om en mer uformell, eller en mer formell versjon.
+**`samtale_3`** – Passer ikke tonen, ber du om en mer uformell eller en mer formell versjon.
 
 **`samtale_4`** – Vil du ha det i et annet format, kan du be om en tabell eller en punktliste.
 
@@ -212,7 +212,7 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`begrensninger_3`** – Den kan også bomme på tall og beregninger. Sjekk derfor alltid viktige tall selv.
 
-**`begrensninger_4`** – Språkmodeller lærer av tekst skrevet av mennesker, og kan derfor gjenta fordommer og skjevheter. Vær kritisk, særlig når teksten handler om mennesker.
+**`begrensninger_4`** – Språkmodeller lærer av tekst skrevet av mennesker og kan derfor gjenta fordommer og skjevheter. Vær kritisk, særlig når teksten handler om mennesker.
 
 **`begrensninger_5`** – Og den kjenner ikke alltid hele sammenhengen. Du kjenner virksomheten, kollegene og situasjonen. Det gjør ikke Copilot.
 
@@ -220,13 +220,13 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 ## 19. Trygg og ansvarlig bruk
 
-**`ansvarlig_1`** – Dette leder oss til ansvarlig bruk. Det første er enkelt: Kvalitetssikre alltid. Les gjennom, sjekk fakta, og rett opp før du deler noe videre.
+**`ansvarlig_1`** – Dette leder oss til ansvarlig bruk. Det første er enkelt: Kvalitetssikre alltid. Les gjennom, sjekk fakta og rett opp før du deler noe videre.
 
-**`ansvarlig_2`** – Bruk jobb- eller skolekontoen når du jobber med jobbdata. Da behandles dataene etter virksomhetens avtaler og sikkerhetsregler, og ikke i en privat tjeneste.
+**`ansvarlig_2`** – Bruk jobb- eller skolekontoen når du håndterer jobbdata. Da behandles dataene etter virksomhetens avtaler og sikkerhetsregler, og ikke i en privat tjeneste.
 
 **`ansvarlig_3`** – Vær varsom med personopplysninger og annen sensitiv informasjon. Ikke lim inn mer enn du trenger, og følg personvernreglene.
 
-**`ansvarlig_4`** – Vær åpen om når du har brukt KI, særlig når innholdet skal publiseres, eller brukes til viktige beslutninger.
+**`ansvarlig_4`** – Vær åpen om når du har brukt KI, særlig når innholdet skal publiseres eller brukes som grunnlag for viktige beslutninger.
 
 **`ansvarlig_5`** – Og følg retningslinjene der du jobber. Uansett hvor god Copilot blir, er det du som har ansvaret for det du deler videre.
 
@@ -238,20 +238,20 @@ Les inn hver replikk som en egen fil i `egen_stemme/` (f.eks. `intro_1.wav`) for
 
 **`tips_3`** – Sett av ti minutter hver dag den første uken til å prøve. Det er slik man lærer.
 
-**`tips_4`** – Når du finner en prompt som fungerer godt, så ta vare på den. Da kan du bruke den igjen, og dele den med andre.
+**`tips_4`** – Når du finner en prompt som fungerer godt, så ta vare på den. Da kan du bruke den igjen og dele den med andre.
 
 **`tips_5`** – Del erfaringer med kollegene dine. Hva fungerer, og hva fungerer ikke? Vi lærer mest av hverandre.
 
 **`tips_6`** – Og vær nysgjerrig, men kritisk. Prøv nye ting, men stol aldri blindt på svaret.
 
-**`tips_7`** – Og husk at det er helt normalt at det tar litt tid før man finner sin egen måte å bruke Copilot på.
+**`tips_7`** – Husk at det er helt normalt at det tar litt tid før man finner sin egen måte å bruke Copilot på.
 
 ## 21. Oppsummert
 
-**`slutt_1`** – Da er vi ved veis ende. Kort oppsummert: Copilot er en KI-assistent som kan spare oss for mye tid, men vi er fortsatt piloten.
+**`slutt_1`** – Da er vi ved veis ende. Kort oppsummert: Copilot er en KI-assistent som kan spare deg for mye tid, men du er fortsatt piloten.
 
 **`slutt_2`** – Gi tydelige instruksjoner med mål, kontekst, forventninger og kilde, og bygg videre på svarene i en samtale.
 
-**`slutt_3`** – Og husk å alltid sjekke resultatet, og følg retningslinjene for trygg bruk.
+**`slutt_3`** – Og husk alltid å sjekke resultatet og å følge retningslinjene for trygg bruk.
 
 **`slutt_4`** – Takk for at du så på. Prøv gjerne selv allerede i dag, og lykke til med Copilot!

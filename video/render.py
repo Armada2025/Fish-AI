@@ -506,9 +506,13 @@ def sc_kolonner(scene, tid, nr, antall) -> list[El]:
             return bilder[aktiv_indeks(t, del_t, outro_t) == i]
         els.append(El(None, x, Y0, t0 - 0.1, velg=velg))
 
-        hode = Image.new("RGBA", (kb - 40, 70), (0, 0, 0, 0))
+        hode = Image.new("RGBA", (kb - 40, 76), (0, 0, 0, 0))
         hode.alpha_composite(ikonbrikke(d_["ikon"], 60, farge, 0.2), (0, 4))
-        hode.alpha_composite(tekstbilde(d_["navn"], font("Bold", 34), farge), (78, 12))
+        if d_.get("undernavn"):
+            hode.alpha_composite(tekstbilde(d_["navn"], font("Bold", 34), farge), (78, -2))
+            hode.alpha_composite(tekstbilde(d_["undernavn"], font("Regular", 22), DEMPET), (79, 44))
+        else:
+            hode.alpha_composite(tekstbilde(d_["navn"], font("Bold", 34), farge), (78, 12))
         els.append(El(hode, x + 26, Y0 + 24, t0 + 0.05))
         y = Y0 + 112
         if d_.get("sitat"):
@@ -890,6 +894,8 @@ class Presentator:
         data = self.proc.stdout.read(n)
         if len(data) == n:
             self.siste = Image.frombuffer("RGB", self.storrelse, data)
+        elif self.siste is None:  # forbi slutten av presentatørvideoen
+            self.siste = Image.new("RGB", self.storrelse, (16, 24, 40))
         return self.siste
 
     def lukk(self):

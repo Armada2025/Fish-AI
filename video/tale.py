@@ -31,6 +31,7 @@ PAUSE_SLUTT = 3.0          # etter siste replikk i videoen
 
 def uttale(tekst: str) -> str:
     """Bytt ut ord som talesyntesen uttaler feil med lydrett skrivemåte."""
+    tekst = tekst.replace(" …", ".").replace("…", ".")  # «…» ignoreres av talesyntesen – gi en pause i stedet
     for ord_, lyd in manus.UTTALE.items():
         tekst = re.sub(rf"(?<![\wæøåÆØÅ]){re.escape(ord_)}(?![a-zæøå])", lyd, tekst)
     return tekst

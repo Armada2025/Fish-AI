@@ -106,7 +106,7 @@ SCENER = [
                 "Og det er nettopp dette Copilot gjør. Det er generativ KI, bygget inn i verktøyene vi bruker på jobben."]},
         ],
         "outro": ["Det viktigste å huske er at KI ikke tenker som et menneske. "
-                  "Den har lært mønstre, og bruker dem til å lage svar."],
+                  "Den har lært mønstre og bruker dem til å lage svar."],
     },
     # ------------------------------------------------------------------ 4
     {
@@ -118,12 +118,10 @@ SCENER = [
         "kandidater": [("torsk", 41), ("sei", 23), ("laks", 17), ("hyse", 11)],
         "advarsel": "Sannsynlig er ikke det samme som sant",
         "sier": [
-            "Kjernen i Copilot er en stor språkmodell. Den er trent på enorme mengder tekst, "
-            "og har lært hvordan språk henger sammen.",
-            "Litt forenklet fungerer det slik: Modellen ser på teksten så langt, "
-            "og beregner hvilket ord som mest sannsynlig kommer etterpå.",
-            "Hvis jeg skriver: Fisken som ble fanget i går, var en stor, vil modellen vurdere ord som torsk, "
-            "sei eller laks, og velge et av de mest sannsynlige.",
+            "Kjernen i Copilot er en stor språkmodell. Den er trent på enorme mengder tekst og har lært hvordan språk henger sammen.",
+            "Litt forenklet fungerer det slik: Modellen ser på teksten så langt og beregner hvilket ord som mest sannsynlig kommer etterpå.",
+            "Tenk deg at jeg skriver: Fisken som ble fanget i går, var en stor … Da vil modellen vurdere ord som torsk, "
+            "sei eller laks, og velge ett av de mest sannsynlige.",
             "Slik bygger den svaret, ord for ord. Det er derfor svarene kan virke så naturlige.",
             "Men det betyr også at modellen ikke slår opp fakta, slik en database gjør. "
             "Den lager tekst som virker sannsynlig, og det er grunnen til at vi alltid må sjekke svarene.",
@@ -136,8 +134,7 @@ SCENER = [
         "tittel": "Hva er Copilot?",
         "deler": [
             {"punkt": "En KI-assistent fra Microsoft", "ikon": "stjerne", "sier": [
-                "Copilot er Microsofts KI-assistent. Den er bygget på store språkmodeller, "
-                "og er laget for å hjelpe deg med vanlige arbeidsoppgaver."]},
+                "Copilot er Microsofts KI-assistent. Den er bygget på store språkmodeller og er laget for å hjelpe deg med vanlige arbeidsoppgaver."]},
             {"punkt": "Forstår vanlig norsk", "ikon": "boble", "sier": [
                 "Du trenger ikke å kunne programmering eller spesielle kommandoer. "
                 "Du skriver, eller snakker, på vanlig norsk, nesten som med en kollega."]},
@@ -161,19 +158,21 @@ SCENER = [
             {"navn": "Copilot Chat", "farge": "teal", "ikon": "boble",
              "punkter": ["Chat i nettleseren, Teams og Copilot-appen",
                          "Svarer ut fra nettet og det du laster opp",
-                         "Inkludert for mange jobb- og skolekontoer"],
+                         "Inkludert i mange jobb- og skolekontoer"],
              "sier": ["Den første er Copilot Chat. Det er en chat-tjeneste du finner i nettleseren, i Teams og i Copilot-appen. "
-                      "Den bruker informasjon fra nettet, og det du selv limer inn eller laster opp. "
+                      "Den bruker informasjon fra nettet og det du selv limer inn eller laster opp. "
                       "Mange virksomheter har denne tilgjengelig som en del av jobb- eller skolekontoen."]},
-            {"navn": "Microsoft 365 Copilot", "farge": "fiolett", "ikon": "apper",
+            {"navn": "Microsoft Copilot", "undernavn": "tidligere Microsoft 365 Copilot", "farge": "fiolett", "ikon": "apper",
              "punkter": ["Bygget inn i Word, Excel, PowerPoint, Outlook og Teams",
                          "Kan bruke dine e-poster, filer og møter",
                          "Krever egen lisens"],
-             "sier": ["Den andre er Microsoft 365 Copilot. Den er bygget direkte inn i Office-appene, "
-                      "og kan bruke jobbdataene dine, som e-poster, dokumenter og møter. Denne krever en egen lisens."]},
+             "sier": ["Den andre er Microsoft Copilot, som tidligere het Microsoft 365 Copilot. "
+                      "Den er bygget inn i Office-appene og kan bruke e-postene, dokumentene og møtene dine. "
+                      "Den krever egen lisens."]},
         ],
         "outro": ["Hvilken versjon du har, avhenger av hva virksomheten din har valgt. "
-                  "Mye av det jeg viser i dag fungerer i begge, men noen av funksjonene i appene krever den fulle versjonen."],
+                  "Chatten fungerer i begge, men mye av det jeg viser i Word, Excel, PowerPoint og Teams "
+                  "krever den fulle versjonen."],
         "merknad": "Hva du har tilgang til, avhenger av lisensen i virksomheten",
     },
     # ------------------------------------------------------------------ 7
@@ -186,7 +185,7 @@ SCENER = [
                 "La oss se på hva som skjer når du bruker Copilot. "
                 "Det starter med at du skriver en instruksjon. Det kaller vi en prompt."]},
             {"boks": ("Copilot henter kontekst", "filer, e-poster og møter du har tilgang til"), "ikon": "dokument", "sier": [
-                "Copilot henter så relevant informasjon, for eksempel fra e-poster, dokumenter og møter. "
+                "Så henter Copilot relevant informasjon, for eksempel fra e-poster, dokumenter og møter. "
                 "Og det er viktig: Den finner bare det du allerede har tilgang til. Tilgangene dine gjelder fortsatt."]},
             {"boks": ("Språkmodellen svarer", "tekst, tabell eller oppsummering"), "ikon": "stjerne", "sier": [
                 "Deretter lager språkmodellen et svar, basert på instruksjonen din og informasjonen den fant."]},
@@ -204,8 +203,8 @@ SCENER = [
         "intro": ["Så, hvor finner du Copilot?"],
         "deler": [
             {"punkt": "Copilot-knappen i Office-appene", "ikon": "apper", "sier": [
-                "I Word, Excel, PowerPoint og Outlook finner du en egen Copilot-knapp, vanligvis øverst i menyen. "
-                "Klikker du på den, åpnes et panel på siden der du kan skrive."]},
+                "I Word, Excel og PowerPoint ligger Copilot-knappen som regel nede til høyre i dokumentet, "
+                "og i Outlook øverst. Klikker du på den, åpnes et panel på siden der du kan skrive."]},
             {"punkt": "I Teams, Edge og Copilot-appen", "ikon": "boble", "sier": [
                 "Du finner også Copilot i Teams, i Edge-nettleseren og i Copilot-appen."]},
             {"punkt": "Logg inn med jobb- eller skolekontoen", "ikon": "las", "sier": [
@@ -214,8 +213,7 @@ SCENER = [
             {"punkt": "Start med et enkelt spørsmål", "ikon": "stjerne", "sier": [
                 "Og så er det bare å starte. Begynn gjerne med et enkelt spørsmål, og se hva som skjer."]},
         ],
-        "outro": ["Er du usikker på hvilken versjon du har tilgang til, kan du spørre IT-avdelingen, "
-                  "eller den som har ansvar for lisensene hos dere."],
+        "outro": ["Er du usikker på hvilken versjon du har tilgang til, kan du spørre IT-avdelingen eller den som har ansvar for lisensene hos dere."],
         "merknad": "Usikker på hva du har tilgang til? Spør IT-avdelingen.",
     },
     # ------------------------------------------------------------------ 9
@@ -231,15 +229,15 @@ SCENER = [
                 "Copilot kan skrive et første utkast for deg. Du beskriver hva dokumentet skal handle om, "
                 "og får et utgangspunkt på sekunder. Du kan også be den bygge på andre filer, for eksempel et notat eller en rapport."]},
             {"punkt": "Omskriv og forbedre tekst", "sier": [
-                "Har du allerede en tekst, kan du markere den og be Copilot omformulere den, gjøre den kortere, eller endre tonen."]},
+                "Har du allerede en tekst, kan du markere den og be Copilot omformulere den, gjøre den kortere eller endre tonen."]},
             {"punkt": "Oppsummer og still spørsmål", "sier": [
-                "Og får du et langt dokument, kan Copilot oppsummere det, eller svare på spørsmål om innholdet."]},
+                "Og får du et langt dokument, kan Copilot oppsummere det eller svare på spørsmål om innholdet."]},
         ],
         "eksempel": "Lag et utkast til et informasjonsskriv om nye rutiner for fangstrapportering, "
                     "basert på Rutiner_2026.docx. Maks én side, vennlig tone.",
         "outro": ["Et eksempel kan være: Lag et utkast til et informasjonsskriv om nye rutiner for fangstrapportering, "
-                  "basert på en bestemt fil, på maks én side, og med vennlig tone.",
-                  "Og husk at du alltid kan be om en ny versjon, eller beholde bare de delene du liker."],
+                  "basert på en bestemt fil, på maks én side og med vennlig tone.",
+                  "Og husk at du alltid kan be om en ny versjon eller beholde bare de delene du liker."],
     },
     # ------------------------------------------------------------------ 10
     {
@@ -274,8 +272,7 @@ SCENER = [
         "intro": ["Teams er kanskje stedet der mange sparer mest tid."],
         "deler": [
             {"punkt": "Oppsummer møter og oppgaver", "sier": [
-                "Etter et møte kan Copilot lage et sammendrag, med de viktigste temaene, beslutningene, "
-                "og hvem som skal gjøre hva. Dette forutsetter at møtet blir transkribert."]},
+                "Etter et møte kan Copilot lage et sammendrag, med de viktigste temaene, beslutningene og hvem som skal gjøre hva. Dette forutsetter at møtet blir transkribert."]},
             {"punkt": "Spør underveis i møtet", "sier": [
                 "Kommer du for sent, kan du spørre: Hva har jeg gått glipp av? "
                 "Da får du en rask oppsummering, uten å forstyrre møtet."]},
@@ -321,8 +318,8 @@ SCENER = [
                 "Du kan be den lage en presentasjon basert på et Word-dokument. "
                 "Da får du et utkast med lysbilder, struktur og bilder. "
                 "Se likevel over design og bilder, slik at presentasjonen passer til virksomhetens profil."]},
-            {"punkt": "Legg til lysbilder og talenotater", "sier": [
-                "Du kan også legge til nye lysbilder, eller be om talenotater, slik at du vet hva du skal si."]},
+            {"punkt": "Legg til lysbilder og foredragsnotater", "sier": [
+                "Du kan også legge til nye lysbilder eller be om foredragsnotater, slik at du vet hva du skal si."]},
             {"punkt": "Oppsummer en presentasjon", "sier": [
                 "Og får du tilsendt en lang presentasjon, kan Copilot oppsummere de viktigste poengene."]},
         ],
@@ -357,9 +354,8 @@ SCENER = [
         "sjekk": "Kontroller tallene mot kildefilen",
         "sier": [
             "La oss se på et litt mer detaljert eksempel. Her ber jeg Copilot om å oppsummere fangstrapportene fra september.",
-            "Legg merke til hvordan prompten er bygget opp. Jeg sier hva jeg vil ha, hvordan svaret skal se ut, "
-            "og hvilken fil Copilot skal bruke.",
-            "Copilot svarer med en ryddig tabell, og peker på de viktigste endringene. "
+            "Legg merke til hvordan prompten er bygget opp. Jeg sier hva jeg vil ha, hvordan svaret skal se ut og hvilken fil Copilot skal bruke.",
+            "Copilot svarer med en ryddig tabell og peker på de viktigste endringene. "
             "Det som ellers kunne tatt en halvtime, tar nå noen sekunder.",
             "Men før jeg bruker tallene, for eksempel i en rapport, sjekker jeg dem alltid mot kildefilen. "
             "Copilot kan nemlig både lese feil og regne feil.",
@@ -405,10 +401,10 @@ SCENER = [
                       "Bruk tallene i Fangst_september.xlsx, og hold en positiv og lettlest tone.»",
              "etiketter": ["Mål", "Kontekst", "Forventninger", "Kilde"],
              "sier": ["Til høyre er en god prompt. Her står det hva som skal skrives, hvem det er til, "
-                      "hvor langt det skal være, hvilken kilde som skal brukes, og hvilken tone teksten skal ha."]},
+                      "hvor langt det skal være, hvilken kilde som skal brukes og hvilken tone teksten skal ha."]},
         ],
         "outro": ["Den gode prompten tar kanskje tjue sekunder lenger å skrive, "
-                  "men du sparer mye tid på å slippe å rette opp et dårlig svar."],
+                  "men du slipper å bruke mye tid på å rette opp et dårlig svar."],
         "merknad": "Litt ekstra innsats i prompten sparer mye retting",
     },
     # ------------------------------------------------------------------ 17
@@ -416,13 +412,13 @@ SCENER = [
         "id": "samtale",
         "type": "punkter",
         "tittel": "Bygg videre – det er en samtale",
-        "intro": ["Et av de viktigste tipsene er dette: Bruk Copilot som en samtale, ikke som en søkemotor. "
+        "intro": ["Et av de viktigste tipsene er dette: Bruk Copilot som en samtalepartner, ikke som en søkemotor. "
                   "Det første svaret er sjelden perfekt, så bygg videre på det."],
         "deler": [
             {"punkt": "«Gjør det kortere og enklere.»", "ikon": "boble", "sier": [
                 "Er teksten for lang, kan du skrive: Gjør det kortere og enklere."]},
             {"punkt": "«Skriv det i en mer uformell tone.»", "ikon": "boble", "sier": [
-                "Passer ikke tonen, ber du om en mer uformell, eller en mer formell versjon."]},
+                "Passer ikke tonen, ber du om en mer uformell eller en mer formell versjon."]},
             {"punkt": "«Sett det opp som en tabell.»", "ikon": "boble", "sier": [
                 "Vil du ha det i et annet format, kan du be om en tabell eller en punktliste."]},
             {"punkt": "«Hvilke kilder brukte du?»", "ikon": "boble", "sier": [
@@ -445,7 +441,7 @@ SCENER = [
             {"punkt": "Kan bomme på tall og beregninger", "ikon": "tabell", "sier": [
                 "Den kan også bomme på tall og beregninger. Sjekk derfor alltid viktige tall selv."]},
             {"punkt": "Kan gjenta skjevheter og fordommer", "ikon": "person", "sier": [
-                "Språkmodeller lærer av tekst skrevet av mennesker, og kan derfor gjenta fordommer og skjevheter. "
+                "Språkmodeller lærer av tekst skrevet av mennesker og kan derfor gjenta fordommer og skjevheter. "
                 "Vær kritisk, særlig når teksten handler om mennesker."]},
             {"punkt": "Kjenner ikke hele sammenhengen", "ikon": "kompass", "sier": [
                 "Og den kjenner ikke alltid hele sammenhengen. Du kjenner virksomheten, kollegene og situasjonen. "
@@ -463,15 +459,15 @@ SCENER = [
         "deler": [
             {"punkt": "Kvalitetssikre alltid", "ikon": "sjekk", "sier": [
                 "Dette leder oss til ansvarlig bruk. Det første er enkelt: Kvalitetssikre alltid. "
-                "Les gjennom, sjekk fakta, og rett opp før du deler noe videre."]},
+                "Les gjennom, sjekk fakta og rett opp før du deler noe videre."]},
             {"punkt": "Bruk jobb- eller skolekontoen", "ikon": "las", "sier": [
-                "Bruk jobb- eller skolekontoen når du jobber med jobbdata. "
+                "Bruk jobb- eller skolekontoen når du håndterer jobbdata. "
                 "Da behandles dataene etter virksomhetens avtaler og sikkerhetsregler, og ikke i en privat tjeneste."]},
             {"punkt": "Vær varsom med personopplysninger", "ikon": "person", "sier": [
                 "Vær varsom med personopplysninger og annen sensitiv informasjon. "
                 "Ikke lim inn mer enn du trenger, og følg personvernreglene."]},
             {"punkt": "Vær åpen om bruk av KI", "ikon": "boble", "sier": [
-                "Vær åpen om når du har brukt KI, særlig når innholdet skal publiseres, eller brukes til viktige beslutninger."]},
+                "Vær åpen om når du har brukt KI, særlig når innholdet skal publiseres eller brukes som grunnlag for viktige beslutninger."]},
             {"punkt": "Følg retningslinjene – du har ansvaret", "ikon": "skjold", "sier": [
                 "Og følg retningslinjene der du jobber. Uansett hvor god Copilot blir, "
                 "er det du som har ansvaret for det du deler videre."]},
@@ -491,13 +487,13 @@ SCENER = [
                 "Sett av ti minutter hver dag den første uken til å prøve. Det er slik man lærer."]},
             {"punkt": "Ta vare på prompter som fungerer", "ikon": "dokument", "sier": [
                 "Når du finner en prompt som fungerer godt, så ta vare på den. "
-                "Da kan du bruke den igjen, og dele den med andre."]},
+                "Da kan du bruke den igjen og dele den med andre."]},
             {"punkt": "Del erfaringer med kolleger", "ikon": "mote", "sier": [
                 "Del erfaringer med kollegene dine. Hva fungerer, og hva fungerer ikke? Vi lærer mest av hverandre."]},
             {"punkt": "Vær nysgjerrig – og kritisk", "ikon": "stjerne", "sier": [
                 "Og vær nysgjerrig, men kritisk. Prøv nye ting, men stol aldri blindt på svaret."]},
         ],
-        "outro": ["Og husk at det er helt normalt at det tar litt tid før man finner sin egen måte å bruke Copilot på."],
+        "outro": ["Husk at det er helt normalt at det tar litt tid før man finner sin egen måte å bruke Copilot på."],
     },
     # ------------------------------------------------------------------ 21
     {
@@ -507,13 +503,12 @@ SCENER = [
         "avslutning": "Takk for meg!",
         "deler": [
             {"punkt": "Copilot sparer tid – du er piloten", "ikon": "kompass", "sier": [
-                "Da er vi ved veis ende. Kort oppsummert: Copilot er en KI-assistent som kan spare oss for mye tid, "
-                "men vi er fortsatt piloten."]},
+                "Da er vi ved veis ende. Kort oppsummert: Copilot er en KI-assistent som kan spare deg for mye tid, men du er fortsatt piloten."]},
             {"punkt": "Gode prompter gir bedre svar", "ikon": "boble", "sier": [
                 "Gi tydelige instruksjoner med mål, kontekst, forventninger og kilde, "
                 "og bygg videre på svarene i en samtale."]},
             {"punkt": "Sjekk alltid resultatet", "ikon": "sjekk", "sier": [
-                "Og husk å alltid sjekke resultatet, og følg retningslinjene for trygg bruk."]},
+                "Og husk alltid å sjekke resultatet og å følge retningslinjene for trygg bruk."]},
         ],
         "outro": ["Takk for at du så på. Prøv gjerne selv allerede i dag, og lykke til med Copilot!"],
     },
