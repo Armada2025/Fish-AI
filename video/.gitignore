@@ -1,0 +1,12 @@
+# Genererte filer (tale, presentatørvideo, ferdig video)
+bygg/
+# Nedlastede modeller (norsk stemme, SadTalker)
+ressurser/
+# Personlige filer – legg aldri bilder eller stemmeopptak av deg selv i et offentlig repo
+foto/
+egen_stemme/*.wav
+*.jpg
+*.jpeg
+*.png
+*.heic
+__pycache__/
