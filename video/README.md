@@ -1,8 +1,8 @@
 # Video: «KI i Copilot» (ca. 15 minutter)
 
 En presentasjonsvideo der **du** er presentatøren. Et bilde av deg animeres slik at det ser ut som du
-snakker (leppesynk, blunking og små hodebevegelser). Ved siden av vises animerte lysbilder, og
-nederst kommer undertekster.
+snakker (leppesynk og naturlige blunk). Ved siden av vises animerte lysbilder, og nederst kommer
+undertekster.
 
 Alt styres fra én fil, [`manus.py`](manus.py). Der står teksten du sier, punktene på lysbildene og
 uttalehjelp for talesyntesen. Et lesevennlig manus ligger i [`MANUS.md`](MANUS.md).
@@ -16,8 +16,8 @@ pip install piper-tts numpy pillow
 # 1. Tale: norsk talesyntese -> bygg/tale.wav, bygg/tidslinje.json, bygg/undertekster.srt
 python lag_video.py tale
 
-# 2. Snakkende ansikt: bildet ditt + talen -> bygg/presentator.mp4 (SadTalker, ca. 1 time på CPU)
-bash presentator.sh foto/meg.jpg bygg/tale.wav
+# 2. Snakkende ansikt: bildet ditt + talen -> bygg/presentator.mp4 (ca. 1–1,5 time på CPU første gang)
+bash presentator.sh foto/meg.jpg 150 400 1200 1600
 
 # 3. (valgfritt) Rask kontroll av layout: ett bilde per scene i bygg/forhandsvisning/
 python lag_video.py forhandsvis --foto foto/meg.jpg --utsnitt 150 400 1200 1600
@@ -31,6 +31,22 @@ python lag_video.py render --foto foto/meg.jpg --utsnitt 150 400 1200 1600 --nav
 * `--navn` og `--rolle` legger et navneskilt nederst i presentatørkortet.
 * `--fra/--til` (sekunder) lager bare et utsnitt. Det er nyttig for å teste raskt.
 * Mangler `bygg/presentator.mp4`, brukes stillbildet i stedet, uten leppesynk.
+
+## Slik lages det snakkende ansiktet
+
+Å animere hele ansiktet med SadTalker for 15 minutter tale ville tatt ca. 22 timer uten grafikkort.
+Derfor deles jobben i to (`presentator.sh`):
+
+1. **SadTalker** lager et basisklipp på 12 sekunder fra bildet ditt: lukket munn og naturlige blunk.
+   Bare pikslene som faktisk endrer seg (øynene) hentes fra SadTalker. Resten er originalbildet, så det
+   blir ingen uskarp firkant eller synlig søm.
+2. **Wav2Lip** legger munnbevegelser til hele talen oppå basisklippet, som spilles fram og tilbake i
+   løkke. Bare munn- og kjeveområdet blandes inn med myk overgang. Hudtekstur fra originalen legges
+   tilbake, og et fiolett skjær inne i munnen korrigeres (`leppesynk.py`).
+
+`presentator/oppsett.sh` installerer alt første gang, med faste versjoner og vekter fra GitHub, i
+`ressurser/presentator/`. SadTalker får en CPU-optimalisering via OpenVINO (`presentator/fast_generator.py`
+og `presentator/sadtalker.diff`) som gjør den ca. 3 ganger raskere med samme resultat.
 
 ## Bruke din egen stemme
 
@@ -56,5 +72,6 @@ bilder eller opptak av deg selv i git.
 
 * Tale: [Piper](https://github.com/rhasspy/piper) med stemmen `no-talesyntese-medium` (lastes ned
   automatisk fra GitHub).
-* Snakkende ansikt: [SadTalker](https://github.com/OpenTalker/SadTalker) (CVPR 2023).
+* Snakkende ansikt: [SadTalker](https://github.com/OpenTalker/SadTalker) (CVPR 2023) for blunk og
+  [Wav2Lip](https://github.com/Rudrabha/Wav2Lip) (ACM MM 2020) for leppesynk.
 * Lysbilder og sammensetting: Python (Pillow, NumPy) og ffmpeg.

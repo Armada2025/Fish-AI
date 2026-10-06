@@ -869,12 +869,10 @@ class Presentator:
 
     @staticmethod
     def _utsnitt(utsnitt, foto, vb, vh):
+        if utsnitt and foto and Image.open(foto).size != (vb, vh):
+            utsnitt = None  # videoen er allerede beskåret (f.eks. fra leppesynk.py) – bruk hele
         if utsnitt:
             x, y, w, h = utsnitt
-            if foto:  # utsnitt er oppgitt i fotoets piksler – skaler til videoens størrelse
-                fb, fh = Image.open(foto).size
-                s = vb / fb
-                x, y, w, h = (int(round(v * s)) for v in (x, y, w, h))
         else:
             w = min(vb, int(vh * 3 / 4))
             h = int(w * 4 / 3)

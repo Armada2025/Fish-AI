@@ -1,0 +1,171 @@
+diff --git a/src/face3d/util/my_awing_arch.py b/src/face3d/util/my_awing_arch.py
+index cd56561..647fa11 100644
+--- a/src/face3d/util/my_awing_arch.py
++++ b/src/face3d/util/my_awing_arch.py
+@@ -15,7 +15,7 @@ def calculate_points(heatmaps):
+     indexes = np.argmax(heatline, axis=2)
+ 
+     preds = np.stack((indexes % W, indexes // W), axis=2)
+-    preds = preds.astype(np.float, copy=False)
++    preds = preds.astype(np.float64, copy=False)
+ 
+     inr = indexes.ravel()
+ 
+diff --git a/src/facerender/animate.py b/src/facerender/animate.py
+index 781f5a3..798337f 100644
+--- a/src/facerender/animate.py
++++ b/src/facerender/animate.py
+@@ -190,9 +190,16 @@ class AnimateFromCoeff():
+         video = []
+         for idx in range(predictions_video.shape[0]):
+             image = predictions_video[idx]
+-            image = np.transpose(image.data.cpu().numpy(), [1, 2, 0]).astype(np.float32)
+-            video.append(image)
+-        result = img_as_ubyte(video)
++            image = np.transpose(image.data.cpu().numpy(), [1, 2, 0])
++            video.append(image if image.dtype == np.uint8 else img_as_ubyte(image.astype(np.float32)))
++        result = video
++        del predictions_video
++        if os.environ.get('SADTALKER_SAVE_FRAMES'):
++            # added: dump the raw rendered crop frames (uint8 RGB, N x size x size x 3) + crop_info
++            np.savez(os.environ['SADTALKER_SAVE_FRAMES'], frames=np.stack(result),
++                     original_size=np.array(crop_info[0], dtype=np.float64) if crop_info[0] else np.zeros(2),
++                     crop_box=np.array(crop_info[1], dtype=np.float64) if len(crop_info) == 3 else np.zeros(4),
++                     quad=np.array(crop_info[2], dtype=np.float64) if len(crop_info) == 3 else np.zeros(4))
+ 
+         ### the generated video is 256x256, so we keep the aspect ratio, 
+         original_size = crop_info[0]
+@@ -222,12 +229,12 @@ class AnimateFromCoeff():
+         save_video_with_watermark(path, new_audio_path, av_path, watermark= False)
+         print(f'The generated video is named {video_save_dir}/{video_name}') 
+ 
+-        if 'full' in preprocess.lower():
++        if 'full' in preprocess.lower() and os.environ.get('SADTALKER_SKIP_PASTE', '0') != '1':
+             # only add watermark to the full image.
+             video_name_full = x['video_name']  + '_full.mp4'
+             full_video_path = os.path.join(video_save_dir, video_name_full)
+             return_path = full_video_path
+-            paste_pic(path, pic_path, crop_info, new_audio_path, full_video_path, extended_crop= True if 'ext' in preprocess.lower() else False)
++            paste_pic(path, pic_path, crop_info, audio_path, full_video_path, extended_crop= True if 'ext' in preprocess.lower() else False, crop_frames_rgb=result)
+             print(f'The generated video is named {video_save_dir}/{video_name_full}') 
+         else:
+             full_video_path = av_path 
+diff --git a/src/facerender/modules/make_animation.py b/src/facerender/modules/make_animation.py
+index 3360c53..716b698 100644
+--- a/src/facerender/modules/make_animation.py
++++ b/src/facerender/modules/make_animation.py
+@@ -103,6 +103,8 @@ def make_animation(source_image, source_semantics, target_semantics,
+                             generator, kp_detector, he_estimator, mapping, 
+                             yaw_c_seq=None, pitch_c_seq=None, roll_c_seq=None,
+                             use_exp=True, use_half=False):
++    from src.facerender.modules.fast_generator import maybe_fast
++    generator = maybe_fast(generator, source_image.device)
+     with torch.no_grad():
+         predictions = []
+ 
+@@ -134,7 +136,7 @@ def make_animation(source_image, source_semantics, target_semantics,
+             kp_driving_new = keypoint_transformation(kp_canonical_new, he_driving, wo_exp=True)
+             out = generator(source_image_new, kp_source=kp_source_new, kp_driving=kp_driving_new)
+             '''
+-            predictions.append(out['prediction'])
++            predictions.append((out['prediction'].clamp(0, 1) * 255).round().to(torch.uint8))
+         predictions_ts = torch.stack(predictions, dim=1)
+     return predictions_ts
+ 
+diff --git a/src/generate_batch.py b/src/generate_batch.py
+index 95f2152..cc5ad72 100644
+--- a/src/generate_batch.py
++++ b/src/generate_batch.py
+@@ -39,8 +39,13 @@ def generate_blink_seq_randomly(num_frames):
+     if num_frames<=20:
+         return ratio
+     frame_id = 0
++    # optional overrides (added): SADTALKER_BLINK_MIN/MAX = gap between blinks in frames, SADTALKER_SEED
++    if os.environ.get('SADTALKER_SEED'):
++        random.seed(int(os.environ['SADTALKER_SEED']))
++    bmin = int(os.environ.get('SADTALKER_BLINK_MIN', 10))
++    bmax = int(os.environ.get('SADTALKER_BLINK_MAX', 70))
+     while frame_id in range(num_frames):
+-        start = random.choice(range(min(10,num_frames), min(int(num_frames/2), 70))) 
++        start = random.choice(range(min(bmin,num_frames), max(min(int(num_frames/2), bmax), min(bmin,num_frames)+1))) 
+         if frame_id+start+5<=num_frames - 1:
+             ratio[frame_id+start:frame_id+start+5, 0] = [0.5, 0.9, 1.0, 0.9, 0.5]
+             frame_id = frame_id+start+5
+diff --git a/src/utils/paste_pic.py b/src/utils/paste_pic.py
+index f9989e2..ad97499 100644
+--- a/src/utils/paste_pic.py
++++ b/src/utils/paste_pic.py
+@@ -5,7 +5,7 @@ import uuid
+ 
+ from src.utils.videoio import save_video_with_watermark 
+ 
+-def paste_pic(video_path, pic_path, crop_info, new_audio_path, full_video_path, extended_crop=False):
++def paste_pic(video_path, pic_path, crop_info, new_audio_path, full_video_path, extended_crop=False, crop_frames_rgb=None):
+ 
+     if not os.path.isfile(pic_path):
+         raise ValueError('pic_path must be a valid path to video/image file')
+@@ -27,15 +27,22 @@ def paste_pic(video_path, pic_path, crop_info, new_audio_path, full_video_path,
+     frame_h = full_img.shape[0]
+     frame_w = full_img.shape[1]
+ 
+-    video_stream = cv2.VideoCapture(video_path)
+-    fps = video_stream.get(cv2.CAP_PROP_FPS)
+-    crop_frames = []
+-    while 1:
+-        still_reading, frame = video_stream.read()
+-        if not still_reading:
+-            video_stream.release()
+-            break
+-        crop_frames.append(frame)
++    fps = 25.0
++    if crop_frames_rgb is not None:
++        # use the rendered frames directly (avoids an extra lossy encode/decode)
++        crop_frames = (cv2.cvtColor(f, cv2.COLOR_RGB2BGR) for f in crop_frames_rgb)
++        n_frames = len(crop_frames_rgb)
++    else:
++        video_stream = cv2.VideoCapture(video_path)
++        fps = video_stream.get(cv2.CAP_PROP_FPS)
++        crop_frames = []
++        while 1:
++            still_reading, frame = video_stream.read()
++            if not still_reading:
++                video_stream.release()
++                break
++            crop_frames.append(frame)
++        n_frames = len(crop_frames)
+     
+     if len(crop_info) != 3:
+         print("you didn't crop the image")
+@@ -53,17 +60,23 @@ def paste_pic(video_path, pic_path, crop_info, new_audio_path, full_video_path,
+         else:
+             oy1, oy2, ox1, ox2 = cly+ly, cly+ry, clx+lx, clx+rx
+ 
+-    tmp_path = str(uuid.uuid4())+'.mp4'
+-    out_tmp = cv2.VideoWriter(tmp_path, cv2.VideoWriter_fourcc(*'MP4V'), fps, (frame_w, frame_h))
+-    for crop_frame in tqdm(crop_frames, 'seamlessClone:'):
++    # Encode straight to H.264 through an ffmpeg pipe (the original wrote MPEG-4 Part 2
++    # via cv2.VideoWriter at a low default bitrate and then stream-copied it).
++    import subprocess
++    crf = os.environ.get('SADTALKER_CRF', '18')
++    cmd = ['ffmpeg', '-y', '-hide_banner', '-loglevel', 'error',
++           '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-s', '%dx%d' % (frame_w, frame_h), '-r', str(fps), '-i', '-',
++           '-i', new_audio_path,
++           '-map', '0:v', '-map', '1:a', '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
++           '-c:v', 'libx264', '-preset', 'medium', '-crf', crf, '-pix_fmt', 'yuv420p',
++           '-c:a', 'aac', '-b:a', '192k', '-shortest', full_video_path]
++    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
++    for crop_frame in tqdm(crop_frames, 'seamlessClone:', total=n_frames):
+         p = cv2.resize(crop_frame.astype(np.uint8), (ox2-ox1, oy2 - oy1)) 
+ 
+         mask = 255*np.ones(p.shape, p.dtype)
+         location = ((ox1+ox2) // 2, (oy1+oy2) // 2)
+         gen_img = cv2.seamlessClone(p, full_img, mask, location, cv2.NORMAL_CLONE)
+-        out_tmp.write(gen_img)
+-
+-    out_tmp.release()
+-
+-    save_video_with_watermark(tmp_path, new_audio_path, full_video_path, watermark=False)
+-    os.remove(tmp_path)
++        proc.stdin.write(gen_img.tobytes())
++    proc.stdin.close()
++    proc.wait()
