@@ -2,7 +2,7 @@
 """Lag presentasjonsvideoen «KI i Copilot».
 
 Steg (kan kjøres hver for seg):
-  python lag_video.py tale                 # 1. talesyntese -> bygg/tale.wav + tidslinje
+  python lag_video.py tale                 # 1. tale (Google-stemme; --stemme piper for lokal) -> bygg/tale.wav
   bash presentator.sh <foto> bygg/tale.wav # 2. snakkende ansikt (SadTalker) -> bygg/presentator.mp4
   python lag_video.py render --foto <foto> # 3. lysbilder + presentatør + lyd -> bygg/ki-i-copilot.mp4
   python lag_video.py forhandsvis          # enkeltbilder for rask kontroll
@@ -38,7 +38,18 @@ def hent_stemme() -> Path:
 
 def kmd_tale(args) -> None:
     import tale
-    tale.lag_tale(hent_stemme(), BYGG, tempo=args.tempo)
+    if args.stemme == "piper":
+        stemme = tale.PiperStemme(hent_stemme(), args.tempo or 1.3)
+    else:
+        navn = args.stemme.split(":", 1)[1] if ":" in args.stemme else None
+        stemme = tale.GoogleStemme(navn, args.tempo or 1.0, BYGG / "tts_cache")
+    tale.lag_tale(stemme, BYGG)
+
+
+def kmd_stemmer(args) -> None:
+    import tale
+    for v in tale.GoogleStemme("-", 1.0, BYGG / "tts_cache").stemmer():
+        print(f"{v['name']:32s} {v.get('ssmlGender', ''):8s} {','.join(v.get('languageCodes', []))}")
 
 
 def felles(args) -> dict:
@@ -86,8 +97,14 @@ def main() -> None:
     sub = p.add_subparsers(dest="kommando", required=True)
 
     t = sub.add_parser("tale", help="lag talesporet og tidslinjen")
-    t.add_argument("--tempo", type=float, default=1.05, help="taletempo (høyere = saktere)")
+    t.add_argument("--stemme", default="google",
+                   help="«google» (velger beste norske stemme), «google:<navn>» eller «piper»")
+    t.add_argument("--tempo", type=float, default=None,
+                   help="Google: talehastighet (1.0 = normal, høyere = raskere). Piper: lengdeskala (høyere = saktere)")
     t.set_defaults(func=kmd_tale)
+
+    sv = sub.add_parser("stemmer", help="list Googles norske stemmer")
+    sv.set_defaults(func=kmd_stemmer)
 
     def presentator_valg(r):
         r.add_argument("--presentator", default=str(BYGG / "presentator.mp4"),

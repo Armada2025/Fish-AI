@@ -1,15 +1,22 @@
 """Steg 1: Lag talesporet og tidslinjen fra manuset.
 
-Hver replikk syntetiseres med Piper (norsk stemme), eller hentes fra en egen
-innspilling i egen_stemme/<scene-id>_<nr>.wav hvis den finnes. Resultatet er
+Hver replikk syntetiseres med valgt stemme – Googles nevrale norske stemmer (best) eller
+Piper (lokal, mer robotaktig) – eller hentes fra en egen innspilling i
+egen_stemme/<scene-id>_<nr>.wav hvis den finnes. Resultatet er
   bygg/tale.wav          – hele lydsporet
   bygg/tidslinje.json    – start/slutt for hver scene og replikk (sekunder)
   bygg/undertekster.srt  – undertekster
 """
 
+import base64
+import hashlib
+import io
 import json
+import os
 import re
 import subprocess
+import urllib.error
+import urllib.request
 import wave
 from pathlib import Path
 
@@ -18,7 +25,8 @@ import numpy as np
 import manus
 
 HER = Path(__file__).resolve().parent
-RATE = 22050
+RATE = 24000  # endelig samplingsrate for talesporet
+GOOGLE_API = "https://texttospeech.googleapis.com/v1"
 
 # Pauser i sekunder
 PAUSE_START = 1.0          # før aller første replikk
@@ -29,29 +37,99 @@ PAUSE_SCENE_UT = 1.3       # etter siste replikk i en scene
 PAUSE_SLUTT = 3.0          # etter siste replikk i videoen
 
 
-def uttale(tekst: str) -> str:
+def uttale(tekst: str, ordliste: dict) -> str:
     """Bytt ut ord som talesyntesen uttaler feil med lydrett skrivemåte."""
     tekst = tekst.replace(" …", ".").replace("…", ".")  # «…» ignoreres av talesyntesen – gi en pause i stedet
-    for ord_, lyd in manus.UTTALE.items():
+    for ord_, lyd in ordliste.items():
         tekst = re.sub(rf"(?<![\wæøåÆØÅ]){re.escape(ord_)}(?![a-zæøå])", lyd, tekst)
     return tekst
 
 
-def last_stemme(modell: Path):
-    from piper import PiperVoice
-    return PiperVoice.load(str(modell), config_path=str(modell) + ".json")
+def resample(lyd: np.ndarray, fra: int, til: int) -> np.ndarray:
+    if fra == til:
+        return lyd
+    n = int(round(len(lyd) * til / fra))
+    return np.interp(np.linspace(0, len(lyd) - 1, n), np.arange(len(lyd)), lyd).astype(np.float32)
 
 
-def syntetiser(stemme, tekst: str, tempo: float) -> np.ndarray:
-    from piper import SynthesisConfig
-    cfg = SynthesisConfig(length_scale=tempo, normalize_audio=True)
-    biter = []
-    stillhet = np.zeros(int(PAUSE_SETNING * RATE), dtype=np.float32)
-    for chunk in stemme.synthesize(uttale(tekst), cfg):
-        if biter:
-            biter.append(stillhet)
-        biter.append(chunk.audio_float_array.astype(np.float32))
-    return np.concatenate(biter)
+class PiperStemme:
+    """Lokal talesyntese (Piper, no-talesyntese-medium). Gratis, men robotaktig."""
+
+    navn = "piper"
+
+    def __init__(self, modell: Path, tempo: float):
+        from piper import PiperVoice
+        self.v = PiperVoice.load(str(modell), config_path=str(modell) + ".json")
+        self.tempo = tempo
+
+    def lag(self, tekst: str) -> np.ndarray:
+        from piper import SynthesisConfig
+        cfg = SynthesisConfig(length_scale=self.tempo, normalize_audio=True)
+        biter = []
+        for chunk in self.v.synthesize(uttale(tekst, manus.UTTALE), cfg):
+            if biter:
+                biter.append(np.zeros(int(PAUSE_SETNING * chunk.sample_rate), dtype=np.float32))
+            biter.append(chunk.audio_float_array.astype(np.float32))
+            rate = chunk.sample_rate
+        return resample(np.concatenate(biter), rate, RATE)
+
+
+class GoogleStemme:
+    """Googles nevrale norske stemmer (Cloud Text-to-Speech). Nøkkel i GOOGLE_TTS_API_KEY."""
+
+    def __init__(self, navn: str | None, tempo: float, cache: Path):
+        self.nokkel = os.environ.get("GOOGLE_TTS_API_KEY", "")
+        self.tempo = tempo
+        self.cache = cache
+        cache.mkdir(parents=True, exist_ok=True)
+        self.navn = navn or self.velg_stemme()
+        print(f"Google-stemme: {self.navn} (tempo {tempo})")
+
+    def _kall(self, sti: str, data: dict | None = None) -> dict:
+        req = urllib.request.Request(f"{GOOGLE_API}/{sti}", method="POST" if data else "GET",
+                                     data=json.dumps(data).encode() if data else None,
+                                     headers={"Content-Type": "application/json"})
+        if self.nokkel:
+            req.add_header("X-Goog-Api-Key", self.nokkel)
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                return json.load(r)
+        except urllib.error.HTTPError as e:
+            raise SystemExit(f"Google Text-to-Speech svarte {e.code}: {e.read().decode()[:400]}\n"
+                             "Sjekk at API-et er slått på og at nøkkelen ligger i GOOGLE_TTS_API_KEY.")
+
+    def stemmer(self) -> list[dict]:
+        return self._kall("voices?languageCode=nb-NO").get("voices", [])
+
+    def velg_stemme(self) -> str:
+        """Foretrekk de mest naturlige stemmetypene: Chirp 3 HD > Chirp HD > Neural2 > WaveNet."""
+        rang = ["Chirp3-HD", "Chirp-HD", "Neural2", "Wavenet", "Standard"]
+        alle = [v for v in self.stemmer() if any(l.startswith("nb") for l in v.get("languageCodes", []))]
+        if not alle:
+            raise SystemExit("Fant ingen norske stemmer hos Google Text-to-Speech.")
+        def poeng(v):
+            n = v["name"]
+            typ = next((i for i, r in enumerate(rang) if r in n), len(rang))
+            return (typ, v.get("ssmlGender") != "MALE", n)
+        return sorted(alle, key=poeng)[0]["name"]
+
+    def lag(self, tekst: str) -> np.ndarray:
+        tekst = tekst.replace(" …", ",").replace("…", ",")
+        nokkel = hashlib.sha1(f"{self.navn}|{self.tempo}|{tekst}".encode()).hexdigest()[:16]
+        fil = self.cache / f"{nokkel}.wav"
+        if not fil.exists():
+            svar = self._kall("text:synthesize", {
+                "input": {"text": tekst},
+                "voice": {"languageCode": "nb-NO", "name": self.navn},
+                "audioConfig": {"audioEncoding": "LINEAR16", "sampleRateHertz": RATE, "speakingRate": self.tempo},
+            })
+            fil.write_bytes(base64.b64decode(svar["audioContent"]))
+        with wave.open(str(fil)) as w:
+            rate = w.getframerate()
+            lyd = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768
+        lyd = resample(lyd, rate, RATE)
+        topp = float(np.abs(lyd).max()) or 1.0
+        return lyd / topp * 0.95
 
 
 def les_wav(sti: Path) -> np.ndarray:
@@ -77,10 +155,10 @@ def srt_tid(t: float) -> str:
     return f"{ms // 3600000:02d}:{ms // 60000 % 60:02d}:{ms // 1000 % 60:02d},{ms % 1000:03d}"
 
 
-def lag_tale(modell: Path, bygg: Path, tempo: float = 1.05) -> dict:
+def lag_tale(stemme, bygg: Path) -> dict:
+    """stemme: et objekt med .lag(tekst) -> mono float32 i RATE Hz (PiperStemme eller GoogleStemme)."""
     bygg.mkdir(parents=True, exist_ok=True)
     egen = HER / "egen_stemme"
-    stemme = None
 
     spor: list[np.ndarray] = []
     t = 0.0
@@ -105,9 +183,7 @@ def lag_tale(modell: Path, bygg: Path, tempo: float = 1.05) -> dict:
             if fil.exists():
                 lyd, kilde = les_wav(fil), "egen"
             else:
-                if stemme is None:
-                    stemme = last_stemme(modell)
-                lyd, kilde = syntetiser(stemme, tekst, tempo), "tts"
+                lyd, kilde = stemme.lag(tekst), stemme.navn
             start = t
             legg_til(lyd * 0.9)
             s["replikker"].append({"tekst": tekst, "start": start, "slutt": t, "kilde": kilde})
